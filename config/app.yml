@@ -1,0 +1,29 @@
+views:
+    directory: "./../views/"
+
+routes:
+    register:
+        url: "/register"
+        method: "GET"
+        action: "\Iut\Controller\UserController::registerAction"
+    about:
+        url: "/about"
+        method: "GET"
+        action: "\Iut\Controller\DefaultController::aboutAction"
+    homepage:
+        url: "/"
+        method: "GET"
+        action: "\Iut\Controller\DefaultController::homepageAction"
+    profile:
+        url: "/profile"
+        method: "GET"
+        action: "\Iut\Controller\UserController::viewProfileAction"
+
+pdo:
+    server: 172.16.1.127
+    user: root
+    password: ~
+
+logger:
+    filelogger:
+        fullpathname: ./../error.log
