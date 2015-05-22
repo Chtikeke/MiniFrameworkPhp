@@ -14,9 +14,11 @@ class PhpViewRenderer implements ViewRendererInterface
 
     /**
      * @param $viewsDirectory
+     * @Inject({"views.directory"})
      */
     public function __construct($viewsDirectory)
     {
+        var_dump($viewsDirectory);
         $this->viewsDirectory = $viewsDirectory;
     }
 

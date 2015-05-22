@@ -3,6 +3,7 @@
 namespace KB;
 
 
+use KB\Controller\AbstractController;
 use KB\Logger\ChainLogger;
 use KB\Logger\FileLogger;
 use KB\Router\RouteNotFound;
@@ -18,11 +19,11 @@ class ExceptionHandler
     private $logger;
 
     /**
-     * @var
+     * @var AbstractController
      */
     private $errorController;
 
-    public function __construct(ChainLogger $logger, $errorController)
+    public function __construct(ChainLogger $logger, AbstractController $errorController)
     {
         $this->logger = $logger;
         $this->errorController = $errorController;

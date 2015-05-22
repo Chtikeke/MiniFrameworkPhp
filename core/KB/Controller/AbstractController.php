@@ -4,7 +4,7 @@ namespace KB\Controller;
 
 use KB\Http\Header;
 use KB\Http\Response;
-use KB\Views\ViewRendererInterface;
+use KB\Views\PhpViewRenderer;
 
 /**
  * Class AbstractController
@@ -12,15 +12,17 @@ use KB\Views\ViewRendererInterface;
 abstract class AbstractController
 {
     /**
-     * @var ViewRendererInterface
+     * @var PhpViewRenderer
      */
     protected $viewRenderer;
 
     /**
-     * @param ViewRendererInterface $viewRenderer
+     * @Inject
+     * @param PhpViewRenderer $viewRenderer
      */
-    public function __construct(ViewRendererInterface $viewRenderer)
+    public function setViewRender(PhpViewRenderer $viewRenderer)
     {
+        var_dump('OK');
         $this->viewRenderer = $viewRenderer;
     }
 

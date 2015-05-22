@@ -2,8 +2,14 @@
 
 namespace KB;
 
+use DI\ContainerBuilder;
+use Doctrine\Common\Cache\ArrayCache;
+use Interop\Container\ContainerInterface;
+use Doctrine\Common\Cache;
+use KB\Config\YamlLoader;
 use KB\Controller\ErrorController;
 use KB\DemoBundle\Controllers\DemoController;
+use KB\Router\Route;
 use KB\Views\ViewRendererInterface;
 use KB\Controller\ControllerResolver;
 use KB\Http\Request;
@@ -30,23 +36,50 @@ class Kernel
      * @var ViewRendererInterface
      */
     private $viewRenderer;
-    /**
-     * @var array
-     */
-    private $routes;
 
     /**
-     * @param ViewRendererInterface $viewRenderer
-     * @param array $routes
+     * @var bool
      */
-    public function __construct(ViewRendererInterface $viewRenderer, array $routes = array())
+    private $booted = false;
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct()
     {
-        $this->viewRenderer = $viewRenderer;
-        $this->routes = $routes;
-
         $this->controllers = array(
-            new DemoController($viewRenderer),
+            new DemoController(),
         );
+    }
+
+    /**
+     * Boot the current kernel
+     */
+    private function boot()
+    {
+        if (true === $this->booted) {
+            return;
+        }
+        $this->initializeContainer();
+        $this->booted = true;
+    }
+
+    /**
+     * Initiliaze the container
+     */
+    private function initializeContainer()
+    {
+        $configLoader = new YamlLoader([__DIR__ . '/../../config/app.yml']);
+
+        $builder = new ContainerBuilder();
+        $builder->setDefinitionCache(new ArrayCache());
+        $builder->addDefinitions($configLoader->load());
+
+        $this->container = $builder->build();
+        $this->container->set('kernel', $this);
+        $this->container->set('request', $this->request);
     }
 
     /**
@@ -57,8 +90,18 @@ class Kernel
     {
         $this->request = $request;
 
+        if (false === $this->booted) {
+            $this->boot();
+        }
+
+        $routes = [];
+
+        foreach ($this->container->get('routes') as $route) {
+            $routes[] = new Route($route['url'], $route['method'], $route['action']);
+        }
+
         try {
-            $matcher = new RouteMatcher($this->routes);
+            $matcher = new RouteMatcher($routes);
             $controllerResolver = new ControllerResolver($matcher);
 
             foreach ($this->controllers as $controller) {
@@ -71,7 +114,6 @@ class Kernel
         } catch (\Exception $e) {
             $chainLogger = new ChainLogger();
             $chainLogger->addLogger(new FileLogger(__DIR__ . "/../../error.log"));
-
 
             $exceptionHandler = new ExceptionHandler(
                 $chainLogger,

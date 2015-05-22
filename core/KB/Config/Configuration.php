@@ -42,4 +42,12 @@ class Configuration
 
         return $this->config[$section];
     }
+
+    /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
 }
