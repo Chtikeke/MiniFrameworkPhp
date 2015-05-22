@@ -12,7 +12,7 @@ class ErrorController extends AbstractController
      */
     public function routeNotFoundAction(\Exception $e)
     {
-        return new Response(404, 'Page not found' . $e->getMessage());
+        return new Response(404, $e->getMessage());
     }
 
     /**

@@ -3,7 +3,7 @@ views:
 
 routes:
     demoBundle:
-        url: /MiniFrameworkPhp/
+        url: /
         method: GET
         action: \KB\DemoBundle\Controllers\DemoController::indexAction
 
