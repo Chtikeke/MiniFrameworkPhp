@@ -3,7 +3,9 @@
 namespace KB;
 
 
+use KB\Logger\ChainLogger;
 use KB\Logger\FileLogger;
+use KB\Router\RouteNotFound;
 
 /**
  * Class ExceptionHandler
@@ -20,7 +22,7 @@ class ExceptionHandler
      */
     private $errorController;
 
-    public function __construct(FileLogger $logger, $errorController)
+    public function __construct(ChainLogger $logger, $errorController)
     {
         $this->logger = $logger;
         $this->errorController = $errorController;
@@ -28,22 +30,14 @@ class ExceptionHandler
 
     public function handle(\Exception $e)
     {
-        $logger = new FileLogger("/home/user01/workspace/POO.dev/error.log");
-        $logger->log(
-            sprintf(
-                "[%s] - %s",
-                date("Y-m-d H:i:s"),
-                $e->getMessage()
-            )
-        );
+        $this->logger->error($e->getMessage());
+
         $action = "genericErrorAction";
 
-        if($e instanceof RouteNotFound)
-        {
+        if ($e instanceof RouteNotFound) {
             $action = "routeNotFoundAction";
         }
 
-        // callable
         return [$this->errorController, $action];
     }
 } 

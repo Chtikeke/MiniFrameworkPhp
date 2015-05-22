@@ -17,21 +17,21 @@ abstract class AbstractController
     protected $viewRenderer;
 
     /**
-     * @param ViewRendererInterface $viewsDirectory
+     * @param ViewRendererInterface $viewRenderer
      */
-    public function __construct(ViewRendererInterface $viewsDirectory)
+    public function __construct(ViewRendererInterface $viewRenderer)
     {
-        $this->viewRenderer = $viewsDirectory;
+        $this->viewRenderer = $viewRenderer;
     }
 
     /**
      * @param $body
-     * @param int $code
+     * @param int $statusCode
      * @return Response
      */
-    protected function createResponse($body, $code = 200)
+    protected function createResponse($body, $statusCode = 200)
     {
-        return new Response($code, $body);
+        return new Response($statusCode, $body);
     }
 
     /**
@@ -41,12 +41,6 @@ abstract class AbstractController
      */
     protected function createRedirectResponse($url, $isPermanent = false)
     {
-        return new Response(
-            $isPermanent ? 301 : 302,
-            null,
-            [
-                new Header('Location', $url)
-            ]
-        );
+        return new Response($isPermanent ? 301 : 302, null, [ new Header('Location', $url) ]);
     }
 }

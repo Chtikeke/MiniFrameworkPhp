@@ -24,11 +24,113 @@ class FileLogger implements LoggerInterface
     }
 
     /**
-     * @param $message
+     * @param mixed $level
+     * @param string $message
+     * @param array $context
+     * @throws \Exception
      * @return mixed|void
      */
-    public function log($message)
+    public function log($level, $message, array $context = array())
     {
-        file_put_contents($this->filename, $message, FILE_APPEND);
+        if (
+            in_array(
+                $level,
+                array(
+                    LogLevel::DEBUG,
+                    LogLevel::NOTICE,
+                    LogLevel::INFO,
+                    LogLevel::WARNING,
+                    LogLevel::ERROR,
+                    LogLevel::ALERT,
+                    LogLevel::CRITICAL,
+                    LogLevel::EMERGENCY
+                )
+            )
+        ) {
+            file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper($level) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        } else {
+            throw new \Exception(sprintf('Log level %s does not exist', $level));
+        }
+
     }
-} 
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function emergency($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function alert($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function critical($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function error($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function warning($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function notice($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function info($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+
+    /**
+     * @param string $message
+     * @param array $context
+     * @return null
+     */
+    public function debug($message, array $context = array())
+    {
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+    }
+}

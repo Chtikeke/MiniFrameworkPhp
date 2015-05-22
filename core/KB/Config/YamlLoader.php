@@ -12,14 +12,14 @@ class YamlLoader implements LoaderInterface
     /**
      * @var array
      */
-    private $fileNames;
+    private $filenames = [];
 
     /**
-     * @param array $fileNames
+     * @param array $filenames
      */
-    public function __construct(array $fileNames)
+    public function __construct(array $filenames)
     {
-        $this->$fileNames = $fileNames;
+        $this->filenames = $filenames;
     }
 
     /**
@@ -28,8 +28,9 @@ class YamlLoader implements LoaderInterface
     public function load()
     {
         $config = [];
-        foreach ($this->$fileNames as $fileName) {
-            $config = array_merge_recursive($config, Yaml::parse($fileName));
+
+        foreach ($this->filenames as $filename) {
+            $config = array_merge_recursive($config, Yaml::parse($filename));
         }
 
         return $config;

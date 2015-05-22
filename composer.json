@@ -2,8 +2,8 @@
     "name": "user01/poo.dev",
     "authors": [
         {
-            "name": "Aliette Ruppert",
-            "email": "aliette.ruppert@gmail.com"
+            "name": "Kevin Balicot",
+            "email": "kevinbalicot@gmail.com"
         }
     ],
     "minimum-stability": "stable",
@@ -12,7 +12,7 @@
     },
     "autoload": {
         "psr-0": {
-            "": "src/"
+            "": ["src/", "core/"]
         }
     }
 }

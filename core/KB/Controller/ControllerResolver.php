@@ -34,8 +34,9 @@ class ControllerResolver implements ControllerResolverInterface
         $action = $this->matcher->match($request);
         $splitAction = explode('::', $action);
         $className = $splitAction[0];
+
         foreach ($this->controllers as $controller) {
-            if ($className === '\\'.get_class($controller)) {
+            if ($className == '\\'.get_class($controller)) {
                 $action = $splitAction[1];
 
                 return [$controller, $action];
