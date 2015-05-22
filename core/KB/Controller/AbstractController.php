@@ -2,6 +2,7 @@
 
 namespace KB\Controller;
 
+use Doctrine\ORM\EntityManager;
 use KB\Http\Header;
 use KB\Http\Request;
 use KB\Http\Response;
@@ -24,6 +25,11 @@ abstract class AbstractController
     protected $request;
 
     /**
+     * @var EntityManager
+     */
+    protected $entityManager;
+
+    /**
      * @Inject
      * @param PhpViewRenderer $viewRenderer
      */
@@ -38,6 +44,14 @@ abstract class AbstractController
     public function setRequest(Request $request)
     {
         $this->request = $request;
+    }
+
+    /**
+     * @param EntityManager $entityManager
+     */
+    public function setEntityManager(EntityManager $entityManager)
+    {
+        $this->entityManager = $entityManager;
     }
 
     /**

@@ -4,6 +4,8 @@ namespace KB;
 
 use DI\ContainerBuilder;
 use Doctrine\Common\Cache\ArrayCache;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Interop\Container\ContainerInterface;
 use Doctrine\Common\Cache;
 use KB\Config\YamlLoader;
@@ -82,6 +84,11 @@ class Kernel
         $this->container = $builder->build();
         $this->container->set('kernel', $this);
         $this->container->set('request', $this->request);
+
+        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../../src"), true);
+        $entityManager = EntityManager::create($this->container->get('doctrine')['default'], $config);
+
+        $this->container->set('entity_manager', $entityManager);
     }
 
     /**
@@ -112,6 +119,7 @@ class Kernel
                 //Set dependencies (PHP-DI doesn't working, so sad :( )
                 $controller->setViewRender($viewRender);
                 $controller->setRequest($request);
+                $controller->setEntityManager($this->container->get('entity_manager'));
 
                 $controllerResolver->addController($controller);
             }

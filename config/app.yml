@@ -7,10 +7,13 @@ routes:
         method: GET
         action: \KB\DemoBundle\Controllers\DemoController::indexAction
 
-pdo:
-    server: localhost
-    user: root
-    password: ~
+doctrine:
+    default:
+        host: localhost
+        user: root
+        password: root
+        dbname: demo
+        driver: pdo_mysql
 
 logger:
     filelogger:
