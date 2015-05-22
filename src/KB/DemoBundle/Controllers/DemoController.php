@@ -4,12 +4,16 @@ namespace KB\DemoBundle\Controllers;
 
 use KB\Controller\AbstractController;
 
+/**
+ * Class DemoController
+ */
 class DemoController extends AbstractController
 {
+    /**
+     * @return \KB\Http\Response
+     */
     public function indexAction()
     {
-        $view = $this->viewRenderer->render('demo.html.php');
-
-        return $this->createResponse($view);
+        return $this->view('demo.html.php');
     }
 }

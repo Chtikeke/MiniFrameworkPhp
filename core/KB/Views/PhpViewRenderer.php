@@ -2,6 +2,8 @@
 
 namespace KB\Views;
 
+use DI\Annotation\Inject;
+
 /**
  * Class PhpViewRenderer
  */
@@ -18,7 +20,6 @@ class PhpViewRenderer implements ViewRendererInterface
      */
     public function __construct($viewsDirectory)
     {
-        var_dump($viewsDirectory);
         $this->viewsDirectory = $viewsDirectory;
     }
 

@@ -1,17 +1,17 @@
 views:
-    directory: "./../views/"
+    directory: /views/
 
 routes:
-    test:
-        url: "/MiniFrameworkPhp/"
-        method: "GET"
-        action: "\KB\DemoBundle\Controllers\DemoController::indexAction"
+    demoBundle:
+        url: /MiniFrameworkPhp/
+        method: GET
+        action: \KB\DemoBundle\Controllers\DemoController::indexAction
 
 pdo:
-    server: 172.16.1.127
+    server: localhost
     user: root
     password: ~
 
 logger:
     filelogger:
-        fullpathname: ./../error.log
+        pathname: /error.log

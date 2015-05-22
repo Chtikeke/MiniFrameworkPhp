@@ -7,9 +7,11 @@ use Doctrine\Common\Cache\ArrayCache;
 use Interop\Container\ContainerInterface;
 use Doctrine\Common\Cache;
 use KB\Config\YamlLoader;
+use KB\Controller\AbstractController;
 use KB\Controller\ErrorController;
 use KB\DemoBundle\Controllers\DemoController;
 use KB\Router\Route;
+use KB\Views\PhpViewRenderer;
 use KB\Views\ViewRendererInterface;
 use KB\Controller\ControllerResolver;
 use KB\Http\Request;
@@ -103,8 +105,14 @@ class Kernel
         try {
             $matcher = new RouteMatcher($routes);
             $controllerResolver = new ControllerResolver($matcher);
+            $viewRender = new PhpViewRenderer(__DIR__ . '/../..' . $this->container->get('views')['directory']);
 
+            /** @var AbstractController $controller */
             foreach ($this->controllers as $controller) {
+                //Set dependencies (PHP-DI doesn't working, so sad :( )
+                $controller->setViewRender($viewRender);
+                $controller->setRequest($request);
+
                 $controllerResolver->addController($controller);
             }
 
@@ -113,7 +121,7 @@ class Kernel
 
         } catch (\Exception $e) {
             $chainLogger = new ChainLogger();
-            $chainLogger->addLogger(new FileLogger(__DIR__ . "/../../error.log"));
+            $chainLogger->addLogger(new FileLogger(__DIR__ . '/../..' . $this->container->get('logger')['filelogger']['pathname']));
 
             $exceptionHandler = new ExceptionHandler(
                 $chainLogger,

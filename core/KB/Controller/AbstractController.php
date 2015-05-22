@@ -3,8 +3,10 @@
 namespace KB\Controller;
 
 use KB\Http\Header;
+use KB\Http\Request;
 use KB\Http\Response;
 use KB\Views\PhpViewRenderer;
+use DI\Annotation\Inject;
 
 /**
  * Class AbstractController
@@ -17,13 +19,25 @@ abstract class AbstractController
     protected $viewRenderer;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @Inject
      * @param PhpViewRenderer $viewRenderer
      */
     public function setViewRender(PhpViewRenderer $viewRenderer)
     {
-        var_dump('OK');
         $this->viewRenderer = $viewRenderer;
+    }
+
+    /**
+     * @param Request $request
+     */
+    public function setRequest(Request $request)
+    {
+        $this->request = $request;
     }
 
     /**
@@ -44,5 +58,19 @@ abstract class AbstractController
     protected function createRedirectResponse($url, $isPermanent = false)
     {
         return new Response($isPermanent ? 301 : 302, null, [ new Header('Location', $url) ]);
+    }
+
+    /**
+     * @param $viewName
+     * @param array $params
+     * @param int $statusCode
+     * @return Response
+     * @throws \Exception
+     */
+    protected function view($viewName, array $params = array(), $statusCode = 200)
+    {
+        $view = $this->viewRenderer->render($viewName, $params);
+
+        return $this->createResponse($view, $statusCode);
     }
 }
