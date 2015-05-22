@@ -1,9 +1,16 @@
 <?php
 
-namespace Iut\Http;
+namespace KB\Http;
 
+/**
+ * Class InvalidHeaderException
+ */
 class InvalidHeaderException extends \InvalidArgumentException
 {
+    /**
+     * @param $name
+     * @return InvalidHeaderException
+     */
     static public function name($name)
     {
         return new self(sprintf(
@@ -11,6 +18,11 @@ class InvalidHeaderException extends \InvalidArgumentException
         ));
     }
 
+    /**
+     * @param $value
+     * @param $name
+     * @return InvalidHeaderException
+     */
     static public function value($value, $name)
     {
         return new self(sprintf(

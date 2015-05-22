@@ -1,12 +1,23 @@
 <?php
 
-namespace Iut;
+namespace KB;
 
-use Iut\Logger\FileLogger;
 
+use KB\Logger\FileLogger;
+
+/**
+ * Class ExceptionHandler
+ */
 class ExceptionHandler
 {
+    /**
+     * @var FileLogger
+     */
     private $logger;
+
+    /**
+     * @var
+     */
     private $errorController;
 
     public function __construct(FileLogger $logger, $errorController)

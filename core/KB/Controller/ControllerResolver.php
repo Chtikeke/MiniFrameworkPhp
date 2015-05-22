@@ -1,12 +1,23 @@
 <?php
 
-namespace Iut;
+namespace KB\Controller;
 
-use Iut\Http\Request;
+use KB\Http\Request;
+use KB\Router\RouteMatcher;
 
+/**
+ * Class ControllerResolver
+ */
 class ControllerResolver implements ControllerResolverInterface
 {
+    /**
+     * @var RouteMatcher
+     */
     private $matcher;
+
+    /**
+     * @var array
+     */
     private $controllers = [];
 
     public function __construct(RouteMatcher $matcher)
@@ -14,6 +25,10 @@ class ControllerResolver implements ControllerResolverInterface
         $this->matcher = $matcher;
     }
 
+    /**
+     * @param Request $request
+     * @return array|callable
+     */
     public function resolve(Request $request)
     {
         $action = $this->matcher->match($request);
@@ -30,6 +45,10 @@ class ControllerResolver implements ControllerResolverInterface
         throw new ControllerNotFound($className);
     }
 
+    /**
+     * @param $controllerInstance
+     * @throws \Exception
+     */
     public function addController($controllerInstance)
     {
         if (!is_object($controllerInstance)) {

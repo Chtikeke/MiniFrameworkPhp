@@ -1,9 +1,11 @@
 <?php
 
-namespace Iut;
+namespace KB\Controller;
+use KB\Http\Request;
 
-use Iut\Http\Request;
-
+/**
+ * Interface ControllerResolverInterface
+ */
 interface ControllerResolverInterface
 {
     /**
