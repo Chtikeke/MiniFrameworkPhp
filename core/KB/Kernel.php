@@ -66,29 +66,32 @@ class Kernel
         if (true === $this->booted) {
             return;
         }
-        $this->initializeContainer();
+        
+        $configLoader = new YamlLoader([__DIR__ . '/../../config/app.yml']);
+        
+        $this->initializeContainer($configLoader->load());
+        
+        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../../src"), true);
+        $entityManager = EntityManager::create($this->container->get('doctrine')['default'], $config);
+
+        $this->container->set('entity_manager', $entityManager);
+        $this->container->set('kernel', $this);
+        $this->container->set('request', $this->request);
+        
         $this->booted = true;
     }
 
     /**
      * Initiliaze the container
+     * @param array $configuration
      */
-    private function initializeContainer()
+    private function initializeContainer(array $configuration)
     {
-        $configLoader = new YamlLoader([__DIR__ . '/../../config/app.yml']);
-
         $builder = new ContainerBuilder();
         $builder->setDefinitionCache(new ArrayCache());
-        $builder->addDefinitions($configLoader->load());
+        $builder->addDefinitions($configuration);
 
         $this->container = $builder->build();
-        $this->container->set('kernel', $this);
-        $this->container->set('request', $this->request);
-
-        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../../src"), true);
-        $entityManager = EntityManager::create($this->container->get('doctrine')['default'], $config);
-
-        $this->container->set('entity_manager', $entityManager);
     }
 
     /**
