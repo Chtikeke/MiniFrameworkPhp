@@ -50,10 +50,8 @@ class ControllerResolver implements ControllerResolverInterface
             }
         }*/
 
-        $controller = $this->container->get($className);
-        
-        if ($controller) {
-            return [$controller, $action];
+        if ($this->container->has($className)) {
+            return [$this->container->get($className), $action];
         }
         
         throw new ControllerNotFound($className);
