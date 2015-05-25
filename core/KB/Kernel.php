@@ -71,10 +71,14 @@ class Kernel
         
         $this->initializeContainer($configLoader->load());
         
-        $config = Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../../src"), true);
-        $entityManager = EntityManager::create($this->container->get('doctrine')['default'], $config);
+        $this->container->set('doctrine.metadataconfig', DI\factory(function (Container $c) {
+            return Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../../src"), true)
+        });
+        
+        $this->container->set('entity_manager', DI\factory(function (Container $c) {
+            return EntityManager::create($c->get('doctrine')['default'], $c->get('doctrine.metadataconfig'));
+        });
 
-        $this->container->set('entity_manager', $entityManager);
         $this->container->set('kernel', $this);
         $this->container->set('request', $this->request);
         
