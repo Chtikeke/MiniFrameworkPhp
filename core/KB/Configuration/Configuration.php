@@ -1,6 +1,6 @@
 <?php
 
-namespace KB\Config;
+namespace KB\Configuration;
 
 /**
  * Class Configuration

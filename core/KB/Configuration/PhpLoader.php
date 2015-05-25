@@ -1,6 +1,6 @@
 <?php
 
-namespace KB\Config;
+namespace KB\Configuration;
 
 /**
  * Class PhpLoader
@@ -17,7 +17,7 @@ class PhpLoader implements LoaderInterface
      */
     public function __construct(array $fileNames)
     {
-        $this->$fileNames = $fileNames;
+        $this->fileNames = $fileNames;
     }
 
     /**
@@ -26,7 +26,7 @@ class PhpLoader implements LoaderInterface
     public function load()
     {
         $config = [];
-        foreach ($this->$fileNames as $fileName) {
+        foreach ($this->fileNames as $fileName) {
             $config = array_merge_recursive($config, include $fileName);
         }
 

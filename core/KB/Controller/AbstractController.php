@@ -2,57 +2,16 @@
 
 namespace KB\Controller;
 
-use Doctrine\ORM\EntityManager;
+use DI\Annotation\Injectable;
 use KB\Http\Header;
-use KB\Http\Request;
 use KB\Http\Response;
-use KB\Views\PhpViewRenderer;
-use DI\Annotation\Inject;
 
 /**
  * Class AbstractController
+ * @Injectable(scope="prototype", lazy=true)
  */
 abstract class AbstractController
 {
-    /**
-     * @var PhpViewRenderer
-     */
-    protected $viewRenderer;
-
-    /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
-     * @var EntityManager
-     */
-    protected $entityManager;
-
-    /**
-     * @Inject
-     * @param PhpViewRenderer $viewRenderer
-     */
-    public function setViewRender(PhpViewRenderer $viewRenderer)
-    {
-        $this->viewRenderer = $viewRenderer;
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    /**
-     * @param EntityManager $entityManager
-     */
-    public function setEntityManager(EntityManager $entityManager)
-    {
-        $this->entityManager = $entityManager;
-    }
 
     /**
      * @param $body

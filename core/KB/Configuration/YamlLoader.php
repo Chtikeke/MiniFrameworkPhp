@@ -1,6 +1,6 @@
 <?php
 
-namespace KB\Config;
+namespace KB\Configuration;
 
 use Symfony\Component\Yaml\Yaml;
 

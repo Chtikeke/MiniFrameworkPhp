@@ -67,7 +67,7 @@ class ControllerResolver implements ControllerResolverInterface
             $this->container->set('\\' . get_class($controller), $controller);
             //throw new \Exception('$controllerInstance must be an object');
         } else {
-            $this->container->set('\\' . $controller, \DI\Object($controller)->lazy());
+            $this->container->set('\\' . $controller, $controller);
         }
         //$this->controllers[] = $controllerInstance;
     }

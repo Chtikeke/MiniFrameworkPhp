@@ -4,14 +4,12 @@ namespace KB;
 
 use DI\ContainerBuilder;
 use Doctrine\Common\Cache\ArrayCache;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\Setup;
 use Interop\Container\ContainerInterface;
 use Doctrine\Common\Cache;
-use KB\Config\YamlLoader;
+use KB\Configuration\PhpLoader;
+use KB\Configuration\YamlLoader;
 use KB\Controller\AbstractController;
 use KB\Controller\ErrorController;
-use KB\DemoBundle\Controllers\DemoController;
 use KB\Router\Route;
 use KB\Views\PhpViewRenderer;
 use KB\Views\ViewRendererInterface;
@@ -54,7 +52,7 @@ class Kernel
     public function __construct()
     {
         $this->controllers = array(
-            new DemoController(),
+            'KB\\DemoBundle\\DemoController',
         );
     }
 
@@ -67,21 +65,14 @@ class Kernel
             return;
         }
         
-        $configLoader = new YamlLoader([__DIR__ . '/../../config/app.yml']);
-        
-        $this->initializeContainer($configLoader->load());
-        
-        $this->container->set('doctrine.metadataconfig', DI\factory(function (Container $c) {
-            return Setup::createAnnotationMetadataConfiguration(array(__DIR__."/../../src"), true)
-        });
-        
-        $this->container->set('entity_manager', DI\factory(function (Container $c) {
-            return EntityManager::create($c->get('doctrine')['default'], $c->get('doctrine.metadataconfig'));
-        });
+        $appConfigurationLoader = new YamlLoader([__DIR__ . '/../../config/app.yml']);
+        $containerConfigurationLoader = new PhpLoader([__DIR__.'/config/config.php']);
 
-        $this->container->set('kernel', $this);
+        $this->initializeContainer(array_merge($appConfigurationLoader->load(), $containerConfigurationLoader->load()));
+
+        //$this->container->set('kernel', $this);
         $this->container->set('request', $this->request);
-        
+
         $this->booted = true;
     }
 
@@ -118,16 +109,15 @@ class Kernel
 
         try {
             $matcher = new RouteMatcher($routes);
-            $controllerResolver = new ControllerResolver($matcher);
+            $controllerResolver = new ControllerResolver($matcher, $this->container);
             $viewRender = new PhpViewRenderer(__DIR__ . '/../..' . $this->container->get('views')['directory']);
 
             /** @var AbstractController $controller */
             foreach ($this->controllers as $controller) {
                 //TODO inject dependencies with PHP DI
-                $controller->setViewRender($viewRender);
-                $controller->setRequest($request);
-                $controller->setEntityManager($this->container->get('entity_manager'));
-
+                //$controller->setViewRender($viewRender);
+                //$controller->setRequest($request);
+                //$controller->setEntityManager($this->container->get('entity_manager'));
                 $controllerResolver->addController($controller);
             }
 
