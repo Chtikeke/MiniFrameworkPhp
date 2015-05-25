@@ -123,7 +123,7 @@ class Kernel
 
             /** @var AbstractController $controller */
             foreach ($this->controllers as $controller) {
-                //Set dependencies (PHP-DI doesn't working, so sad :( )
+                //TODO inject dependencies with PHP DI
                 $controller->setViewRender($viewRender);
                 $controller->setRequest($request);
                 $controller->setEntityManager($this->container->get('entity_manager'));
