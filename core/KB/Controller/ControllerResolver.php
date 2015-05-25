@@ -61,13 +61,14 @@ class ControllerResolver implements ControllerResolverInterface
      * @param $controllerInstance
      * @throws \Exception
      */
-    public function addController($controllerInstance)
+    public function addController($controller)
     {
-        if (!is_object($controllerInstance)) {
-            throw new \Exception('$controllerInstance must be an object');
+        if (is_object($controller)) {
+            $this->container->set('\\' . get_class($controller), $controller);
+            //throw new \Exception('$controllerInstance must be an object');
+        } else {
+            $this->container->set('\\' . $controller, \DI\Object($controller)->lazy());
         }
-
-        $this->container->set('\\' . get_class($controllerInstance), $controllerInstance);
         //$this->controllers[] = $controllerInstance;
     }
 }
