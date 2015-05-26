@@ -2,8 +2,6 @@
 
 namespace KB\Views;
 
-use DI\Annotation\Inject;
-
 /**
  * Class PhpViewRenderer
  */
@@ -16,7 +14,6 @@ class PhpViewRenderer implements ViewRendererInterface
 
     /**
      * @param $viewsDirectory
-     * @Inject({"views.directory"})
      */
     public function __construct($viewsDirectory)
     {

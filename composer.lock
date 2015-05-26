@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "d067c45cdb2629c4e2875f1aa57329e4",
+    "hash": "e48d9be42765d2e89a6ea2af2942c2d5",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -584,12 +584,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mnapoli/PHP-DI.git",
-                "reference": "7afd2574c3f4c23814a43dbca23d7cd1741aa489"
+                "reference": "2edeea7e3cc36357c73fc20aad66fe1d919316b5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mnapoli/PHP-DI/zipball/7afd2574c3f4c23814a43dbca23d7cd1741aa489",
-                "reference": "7afd2574c3f4c23814a43dbca23d7cd1741aa489",
+                "url": "https://api.github.com/repos/mnapoli/PHP-DI/zipball/2edeea7e3cc36357c73fc20aad66fe1d919316b5",
+                "reference": "2edeea7e3cc36357c73fc20aad66fe1d919316b5",
                 "shasum": ""
             },
             "require": {
@@ -626,14 +626,14 @@
             "license": [
                 "MIT"
             ],
-            "description": "PHP-DI is a Container that makes Dependency Injection as practical as possible in PHP",
-            "homepage": "http://mnapoli.github.com/PHP-DI/",
+            "description": "The dependency injection container for humans",
+            "homepage": "http://php-di.org/",
             "keywords": [
                 "container",
                 "dependency injection",
                 "di"
             ],
-            "time": "2015-05-15 14:29:13"
+            "time": "2015-05-24 21:18:58"
         },
         {
             "name": "mnapoli/phpdocreader",

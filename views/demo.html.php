@@ -7,7 +7,7 @@
     <body>
         <h1>Hello world</h1>
         <?php
-            foreach ($users as $user) {
+            foreach ($parameters['users'] as $user) {
                 echo '<p>' . $user->getName() . '</p>';
             }
         ?>

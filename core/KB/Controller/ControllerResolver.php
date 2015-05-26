@@ -25,7 +25,7 @@ class ControllerResolver implements ControllerResolverInterface
      * @param RouteMatcher $matcher
      * @param ContainerInterface $container
      */
-    public function __construct(RouteMatcher $matcher, ContainerInterface $container)
+    public function __construct(RouteMatcher $matcher, ContainerInterface $container = null)
     {
         $this->matcher = $matcher;
         $this->container = $container;
@@ -41,16 +41,15 @@ class ControllerResolver implements ControllerResolverInterface
         $splitAction = explode('::', $action);
         $className = $splitAction[0];
 
-        /*
-        foreach ($this->controllers as $controller) {
-            if ($className == '\\'.get_class($controller)) {
-                $action = $splitAction[1];
+        if (is_null($this->container)) {
+            foreach ($this->controllers as $controller) {
+                if ($className == '\\'.get_class($controller)) {
+                    $action = $splitAction[1];
 
-                return [$controller, $action];
+                    return [$controller, $action];
+                }
             }
-        }*/
-
-        if ($this->container->has($className)) {
+        } else if ($this->container->has($className)) {
             return [$this->container->get($className), $action];
         }
         
@@ -58,17 +57,21 @@ class ControllerResolver implements ControllerResolverInterface
     }
 
     /**
-     * @param $controllerInstance
+     * @param object | string $controller
      * @throws \Exception
      */
     public function addController($controller)
     {
         if (is_object($controller)) {
-            $this->container->set('\\' . get_class($controller), $controller);
-            //throw new \Exception('$controllerInstance must be an object');
+
+            if (is_null($this->container)) {
+                $this->controllers[] = $controller;
+            } else {
+                $this->container->set('\\' . get_class($controller), $controller);
+            }
+
         } else {
             $this->container->set('\\' . $controller, $controller);
         }
-        //$this->controllers[] = $controllerInstance;
     }
 }

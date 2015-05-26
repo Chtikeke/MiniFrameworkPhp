@@ -2,16 +2,19 @@
 
 namespace KB\Controller;
 
-use DI\Annotation\Injectable;
 use KB\Http\Header;
 use KB\Http\Response;
+use KB\Views\ViewRendererInterface;
 
 /**
  * Class AbstractController
- * @Injectable(scope="prototype", lazy=true)
  */
 abstract class AbstractController
 {
+    /**
+     * @var ViewRendererInterface
+     */
+    protected $viewRenderer;
 
     /**
      * @param $body
@@ -42,6 +45,10 @@ abstract class AbstractController
      */
     protected function view($viewName, array $params = array(), $statusCode = 200)
     {
+        if (is_null($this->viewRenderer)) {
+            throw new \LogicException('No view renderer defined, you need set a instance of ViewRendererInterface to create a view');
+        }
+
         $view = $this->viewRenderer->render($viewName, $params);
 
         return $this->createResponse($view, $statusCode);

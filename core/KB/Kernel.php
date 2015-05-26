@@ -8,10 +8,8 @@ use Interop\Container\ContainerInterface;
 use Doctrine\Common\Cache;
 use KB\Configuration\PhpLoader;
 use KB\Configuration\YamlLoader;
-use KB\Controller\AbstractController;
 use KB\Controller\ErrorController;
 use KB\Router\Route;
-use KB\Views\PhpViewRenderer;
 use KB\Views\ViewRendererInterface;
 use KB\Controller\ControllerResolver;
 use KB\Http\Request;
@@ -85,7 +83,7 @@ class Kernel
         $builder = new ContainerBuilder();
         $builder->setDefinitionCache(new ArrayCache());
         $builder->addDefinitions($configuration);
-        $builder->useAnnotation(true);
+        $builder->useAnnotations(true);
 
         $this->container = $builder->build();
     }
@@ -111,7 +109,6 @@ class Kernel
         try {
             $matcher = new RouteMatcher($routes);
             $controllerResolver = new ControllerResolver($matcher, $this->container);
-            $viewRender = new PhpViewRenderer(__DIR__ . '/../..' . $this->container->get('views')['directory']);
 
             foreach ($this->controllers as $controllerName) {
                 $controllerResolver->addController($controllerName);
