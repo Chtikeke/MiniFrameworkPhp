@@ -7,6 +7,6 @@ Mini framework Php inspiré de Symfony2 basé sur PHP-DI
     $ git clone https://github.com/Chtikeke/MiniFrameworkPhp.git
     $ rm -rf MiniFrameworkPhp/.git
 
-# Installation dependencies
+# Install dependencies
     $ composer.phar install
 
