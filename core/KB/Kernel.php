@@ -115,7 +115,7 @@ class Kernel
             }
 
             $resolvedController = $controllerResolver->resolve($request);
-            $response = call_user_func($resolvedController);
+            $response = call_user_func(array($resolvedController[0], $resolvedController[1]), $resolvedController[2]);
 
         } catch (\Exception $e) {
             $chainLogger = new ChainLogger();

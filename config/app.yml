@@ -6,7 +6,7 @@ views:
 
 routes:
     demoBundle:
-        url: /
+        url: /(.*)/
         method: GET
         action: \KB\DemoBundle\Controllers\DemoController::indexAction
 

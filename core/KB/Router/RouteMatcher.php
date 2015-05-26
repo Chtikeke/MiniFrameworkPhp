@@ -31,9 +31,11 @@ class RouteMatcher
         /** @var Route $route */
         foreach($this->routes as $route)
         {
-           if ($route->getUrl() === $request->getUrl() && $route->getMethod() === $request->getMethod()) {
-               return $route->getAction();
-           }
+            $urlToMatch = str_replace('/', '\\/', $route->getUrl());
+
+            if (preg_match('/' . $urlToMatch . '$/', $request->getUrl(), $matches) && $route->getMethod() === $request->getMethod()) {
+               return [$route->getAction(), array_splice($matches, 1)];
+            }
         }
 
         throw new RouteNotFound($request);

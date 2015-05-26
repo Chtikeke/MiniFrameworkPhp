@@ -37,8 +37,8 @@ class ControllerResolver implements ControllerResolverInterface
      */
     public function resolve(Request $request)
     {
-        $action = $this->matcher->match($request);
-        $splitAction = explode('::', $action);
+        $matchedAction = $this->matcher->match($request);
+        $splitAction = explode('::', $matchedAction[0]);
         $className = $splitAction[0];
 
         if (is_null($this->container)) {
@@ -46,11 +46,11 @@ class ControllerResolver implements ControllerResolverInterface
                 if ($className == '\\'.get_class($controller)) {
                     $action = $splitAction[1];
 
-                    return [$controller, $action];
+                    return [$controller, $action, $matchedAction[1]];
                 }
             }
         } else if ($this->container->has($className)) {
-            return [$this->container->get($className), $action];
+            return [$this->container->get($className), $matchedAction[0], $matchedAction[1]];
         }
         
         throw new ControllerNotFound($className);
