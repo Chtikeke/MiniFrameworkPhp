@@ -11,6 +11,9 @@ doctrine:
         dbname:     ~
         driver:     pdo_mysql
 
+security:
+    userclassname: ~
+
 logger:
     filelogger:
         pathname: /error.log

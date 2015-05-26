@@ -24,6 +24,13 @@ return [
         return new \KB\Views\PhpViewRenderer(__DIR__ . '/../../../'. $c->get('views')['directory']);
     }),
 
+    '@security_context' => \DI\factory(function (Container $c) {
+        return new \KB\Security\SecurityContext(
+            new \KB\Session\SessionManager(),
+            $c->get('security')['userclassname']
+        );
+    }),
+
     'KB\Controller\AbstractController' => \DI\Object()
         ->property('viewRenderer', \DI\get('@php_view_render')),
 ];
