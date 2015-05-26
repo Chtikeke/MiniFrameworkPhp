@@ -5,7 +5,7 @@ use DI\Container;
 return [
     'doctrine.metadataconfig' => \DI\factory(function(container $c) {
         return Doctrine\ORM\Tools\Setup::createAnnotationMetadataConfiguration(
-            [\DI\string('{kernel.src_dir}/Gbu')],
+            [\DI\string(__DIR__ . '/../../../src/')],
             true,
             null,
             null,
