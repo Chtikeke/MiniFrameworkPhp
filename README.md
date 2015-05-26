@@ -1,15 +1,8 @@
 MiniFrameworkPhp
 ================
 
-Mini framework Php inspiré de Symfony2
-
-
-# Clone project
-$ git clone https://github.com/NilinC/MiniFrameworkPhp.git
+Mini framework Php inspiré de Symfony2 basé sur PHP-DI
 
 # Install dependancies
 $ composer.phar install
-
-#Launch server
-$ php -S localhost:8000
 
