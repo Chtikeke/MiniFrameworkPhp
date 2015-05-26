@@ -25,7 +25,7 @@ use KB\Router\RouteMatcher;
 class Kernel
 {
     /**
-     * @var
+     * @var Request
      */
     private $request;
 
@@ -85,6 +85,7 @@ class Kernel
         $builder = new ContainerBuilder();
         $builder->setDefinitionCache(new ArrayCache());
         $builder->addDefinitions($configuration);
+        $builder->useAnnotation(true);
 
         $this->container = $builder->build();
     }
@@ -112,13 +113,8 @@ class Kernel
             $controllerResolver = new ControllerResolver($matcher, $this->container);
             $viewRender = new PhpViewRenderer(__DIR__ . '/../..' . $this->container->get('views')['directory']);
 
-            /** @var AbstractController $controller */
-            foreach ($this->controllers as $controller) {
-                //TODO inject dependencies with PHP DI
-                //$controller->setViewRender($viewRender);
-                //$controller->setRequest($request);
-                //$controller->setEntityManager($this->container->get('entity_manager'));
-                $controllerResolver->addController($controller);
+            foreach ($this->controllers as $controllerName) {
+                $controllerResolver->addController($controllerName);
             }
 
             $resolvedController = $controllerResolver->resolve($request);
