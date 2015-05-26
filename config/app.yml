@@ -1,22 +1,15 @@
-imports:
-    - { resource: 'parameters.yml' }
-
 views:
     directory: /views/
 
-routes:
-    demoBundle:
-        url: /(.*)/
-        method: GET
-        action: \KB\DemoBundle\Controllers\DemoController::indexAction
+routes: ~
 
 doctrine:
     default:
-        host: localhost
-        user: root
-        password: root
-        dbname: demo
-        driver: pdo_mysql
+        host:       localhost
+        user:       root
+        password:   root
+        dbname:     ~
+        driver:     pdo_mysql
 
 logger:
     filelogger:

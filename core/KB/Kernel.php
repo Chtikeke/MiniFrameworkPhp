@@ -102,8 +102,10 @@ class Kernel
 
         $routes = [];
 
-        foreach ($this->container->get('routes') as $route) {
-            $routes[] = new Route($route['url'], $route['method'], $route['action']);
+        if (!is_null($this->container->get('routes'))) {
+            foreach ($this->container->get('routes') as $route) {
+                $routes[] = new Route($route['url'], $route['method'], $route['action']);
+            }
         }
 
         try {
