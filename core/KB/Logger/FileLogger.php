@@ -61,7 +61,7 @@ class FileLogger implements LoggerInterface
      */
     public function emergency($message, array $context = array())
     {
-        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::EMERGENCY) . '] ' . $message) . PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -71,7 +71,7 @@ class FileLogger implements LoggerInterface
      */
     public function alert($message, array $context = array())
     {
-        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::ALERT) . '] ' . $message) . PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -81,7 +81,7 @@ class FileLogger implements LoggerInterface
      */
     public function critical($message, array $context = array())
     {
-        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::CRITICAL) . '] ' . $message) . PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -91,7 +91,7 @@ class FileLogger implements LoggerInterface
      */
     public function error($message, array $context = array())
     {
-        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::ERROR) . '] ' . $message) . PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -101,7 +101,7 @@ class FileLogger implements LoggerInterface
      */
     public function warning($message, array $context = array())
     {
-        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::WARNING) . '] ' . $message) . PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -121,7 +121,7 @@ class FileLogger implements LoggerInterface
      */
     public function info($message, array $context = array())
     {
-        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::INFO) . '] ' . $message) . PHP_EOL, FILE_APPEND);
     }
 
     /**
@@ -131,6 +131,6 @@ class FileLogger implements LoggerInterface
      */
     public function debug($message, array $context = array())
     {
-        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::NOTICE) . '] ' . $message) . PHP_EOL, FILE_APPEND);
+        file_put_contents($this->filename, sprintf("[%s] - %s", date("Y-m-d H:i:s"), '[' . strtoupper(LogLevel::DEBUG) . '] ' . $message) . PHP_EOL, FILE_APPEND);
     }
 }
