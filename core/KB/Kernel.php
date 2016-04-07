@@ -50,7 +50,7 @@ class Kernel
     public function __construct()
     {
         $this->controllers = array(
-            'KB\\DemoBundle\\DemoController',
+            #'KB\\DemoBundle\\DemoController',
         );
     }
 
